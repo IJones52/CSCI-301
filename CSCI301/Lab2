@@ -1,0 +1,24 @@
+#lang racket
+
+(define gen-list
+  (lambda (a b)
+    (if(= a b)
+       a
+       (begin
+         (displayln a)
+         ;fix your recursion
+         (list(gen-list((+1 a) b)))
+         ))))
+
+
+(define sum
+  (lambda (L)
+    ;if the cdr is empty return the single number
+    (if (null? (cdr L))
+        (car L)
+        (begin
+          ;show the list
+          (displayln L)
+          ;add the current 1st value in the list to the sum of all of the lower values
+          (+ (sum(cdr L)) (car L) ))
+          )))

@@ -1,0 +1,7 @@
+#lang racket
+(define mystery
+ (lambda (L)
+ (if (null? L)
+ L
+ (append (mystery (cdr L))
+ (list (car L))))))
