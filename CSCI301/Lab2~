@@ -1,5 +1,5 @@
 #lang racket
-;4
+
 (define gen-list
   (lambda (a b)
     (if(= a b)
@@ -10,7 +10,7 @@
          (list(gen-list((+1 a) b)))
          ))))
 
-;5
+
 (define sum
   (lambda (L)
     ;if the cdr is empty return the single number
