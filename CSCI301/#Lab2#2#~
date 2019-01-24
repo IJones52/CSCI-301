@@ -24,9 +24,9 @@
 ;Make sure that n is smaller than the size of L
  (define retrieve-first-n
    (lambda (n L)
-     (if (= n 1)
-         (list (car L))
+     (if (= n 0)
+         (car L)
          (begin
            (displayln L)
-           (append (list(car L)) (retrieve-first-n (- n 1) (cdr L)))
-           ))))
+           (list((retrieve-first-n( (- n 1) (cdr L)))))
+           (list L)))))
