@@ -30,3 +30,16 @@
            (displayln L)
            (append (list(car L)) (retrieve-first-n (- n 1) (cdr L)))
            ))))
+
+;7
+(define pair-sum?
+  (lambda (L n)
+    (if (null? (cdr L))
+        (not #t)
+       (begin
+    (if (equal? (+ (car L) (car(cdr L))) n)
+        ;if the thing is true return that value
+        (equal? (+ (car L) (car(cdr L))) n)
+        (begin
+          (pair-sum? (cdr L) n)))))))
+        

@@ -2,14 +2,11 @@
 ;4
 (define gen-list
   (lambda (a b)
-    (if(= a b)
-       a
-       (begin
-         (displayln a)
-         ;fix your recursion
-         (list(gen-list((+1 a) b)))
-         ))))
-
+    (if (= a b)
+        (list a)
+        (begin
+          (displayln a)
+          (append (list a) (car(list (gen-list(+ a 1) b))))))))
 ;5
 (define sum
   (lambda (L)
@@ -27,9 +24,22 @@
 ;Make sure that n is smaller than the size of L
  (define retrieve-first-n
    (lambda (n L)
-     (if (= n 0)
-         (car L)
+     (if (= n 1)
+         (list (car L))
          (begin
            (displayln L)
-           (list((retrieve-first-n( (- n 1) (cdr L)))))
-           (list L)))))
+           (append (list(car L)) (retrieve-first-n (- n 1) (cdr L)))
+           ))))
+
+;7
+(define pair-sum?
+  (lambda (L n)
+    (if (null? (cdr L))
+        (not #t)
+       (begin
+    (if (equal? (+ (car L) (car(cdr L))) n)
+        ;if the thing is true return that value
+        (equal? (+ (car L) (car(cdr L))) n)
+        (begin
+          (pair-sum? (cdr L) n)))))))
+        
