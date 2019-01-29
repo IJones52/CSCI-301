@@ -2,7 +2,6 @@
 ;#1
 (define member?
   (lambda (x L)
-    ;Make sure it doesnt crash when it goes out of bounds
     (if (null? L)
         (not #t)
         (begin
@@ -21,4 +20,12 @@
         (not #t)
         (begin
           (subset? (cdr L1) L2)))))))
+
+;3
+(define set-equal?
+  (lambda (L1 L2)
+    (if (and (subset? L1 L2) (subset? L2 L1))
+        (not #f)
+        (begin
+          (not #t)))))
     
