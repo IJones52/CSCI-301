@@ -1,0 +1,10 @@
+#lang racket
+(define member?
+  (lambda (x L)
+    (if (null? (car L))
+        (not #t)
+        (begin
+          (if (= x (car L))
+              (not #f)
+              (begin
+                (member? x (cdr L))))))))
