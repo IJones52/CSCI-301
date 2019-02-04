@@ -43,22 +43,19 @@
                 (union (cdr L1) (cons (car L1) L2))))))))
 
 ;Intersect
+;We need to go through one, find all of the members that are in the other and leave them
+;delete the ones that aren't
+;figure out how to append the new ones to the end so we can compare a new item
+
+;Might want to scrap this
 (define intersect
   (lambda (L1 L2)
-    ;Base: if L1 end up empty we've gone through the list
     (if (null? L1)
-        '()
+        (car(list L2))
         (begin
-          ;If the first member of L1 is in L2, and also in L1 then its in the intersect
           (if (member? (car L1) L2)
-              ;Start building a list with it
-              (cons (car L1) (intersect (cdr L1) L2))
+              ;If it is a member of both, keep it, if not delete it
+              (intersect (cdr L1) (append (list(car L2)) (cdr L2)))
               (begin
-                ;Otherwise ignore it and move on
-                (intersect (cdr L1) L2)))))))
-         
-             
-              
-    
-    
+                (intersect (cdr L1) (cdr L2))))))))
     
