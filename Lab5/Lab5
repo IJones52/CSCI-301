@@ -1,0 +1,50 @@
+#lang racket
+;Helpers
+(define member?
+  (lambda (x L)
+    (if (null? L)
+        (not #t)
+        (begin
+          (if (list? x)
+              (not (set-equal? x L))
+              (begin
+          (if (eqv? x (car L))
+              (not #f)
+              (begin
+                (member? x (cdr L))))))))))
+
+
+(define subset?
+  (lambda (L1 L2)
+    (if (null? L1)
+         (not #f)
+         (begin
+    (if (not(member? (car L1) L2))
+        (not #t)
+        (begin
+          (subset? (cdr L1) L2)))))))
+
+
+(define set-equal?
+  (lambda (L1 L2)
+    (if (and (subset? L1 L2) (subset? L2 L1))
+        (not #f)
+        (begin
+          (not #t)))))
+
+
+
+;Reflexive xRx
+(define Reflexive?
+  (lambda (L S)
+    (if (null? )
+        (not #f)
+        (begin
+          (if (member? (list (car S) (car S)) L)
+              (Reflexive? L (cdr S))
+              (begin
+                (not #t)))))))
+
+;Symmetric xRy and yRx
+
+;Transitive xRy and yRz
