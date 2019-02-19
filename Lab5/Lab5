@@ -35,15 +35,21 @@
 
 
 ;Reflexive xRx
+
+;Need to delete the pair in L, and have the end condition check if both L and S are null
 (define Reflexive?
   (lambda (L S)
-    (if (null? )
+    (if (and (null? L) (null? S))
         (not #f)
         (begin
+          (if (null? S)
+              (not #t)
+              (begin
           (if (member? (list (car S) (car S)) L)
+              (remove (list (car S) (car S) L))
               (Reflexive? L (cdr S))
               (begin
-                (not #t)))))))
+                (not #t)))))))))
 
 ;Symmetric xRy and yRx
 
