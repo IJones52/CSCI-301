@@ -46,8 +46,7 @@
               (not #t)
               (begin
           (if (member? (list (car S) (car S)) L)
-              (remove (list (car S) (car S) L))
-              (Reflexive? L (cdr S))
+              (Reflexive? (remove (list (car S) (car S)) L) (cdr S))
               (begin
                 (not #t)))))))))
 
