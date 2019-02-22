@@ -65,4 +65,18 @@
               (begin
                 (not #t)))))))))
 
-;Transitive xRy and yRz
+;Transitive xRy and yRz or xRy and yRx or xRx and xRx
+(define Transitive?
+  (lambda (L)
+    (if (null? L)
+        (not #f)
+        (begin
+          (cond
+          ;if the members of the pair are the same, remove it
+            [(eqv? (car(car L)) (car(cdr(car L)))) (Transitive? (remove (list (car(car L)) (car(car L))) L))]
+          ;if they differ, search for the reverse and remove that
+            [(member (list (car(cdr(car L))) (car(car L))) L) (Transitive? (remove* (list (list (car(cdr(car L))) (car(car L))) (car L)) L))]
+          ;if there is no reverse, try making a pair out of (. x) (. x) and search for that, and find (x .) (. x)
+            
+          ;if none of these things work then it isn't transitive
+            [(zero? 0)(not #t)])))))
