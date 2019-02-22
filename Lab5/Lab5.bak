@@ -34,7 +34,6 @@
 
 
 
-
 ;Reflexive xRx
 
 ;Need to delete the pair in L, and have the end condition check if both L and S are null
@@ -52,17 +51,5 @@
                 (not #t)))))))))
 
 ;Symmetric xRy and yRx
-(define Symmetric?
-  (lambda (L)
-    (if (null? L)
-        (not #f)
-        (begin
-            (if (null? (cdr L))
-                    (member? (list (car(cdr(car L))) (car(car L))) L)
-                                (begin
-          (if (member (list (car(cdr(car L))) (car(car L))) L)
-              (Symmetric? (remove* (list (car L) (list (car(car(cdr L))) (car(car L)))) L))
-              (begin
-                (not #t)))))))))
 
 ;Transitive xRy and yRz
