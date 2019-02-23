@@ -77,6 +77,6 @@
           ;if they differ, search for the reverse and remove that
             [(member (list (car(cdr(car L))) (car(car L))) L) (Transitive? (remove* (list (list (car(cdr(car L))) (car(car L))) (car L)) L))]
           ;if there is no reverse, try making a pair out of (. x) (. x) and search for that, and find (x .) (. x)
-            
+            [(and (member (list (car(cdr(car L))) (car(cdr(car(cdr L))))) L) (member (list (car(car L)) (car(cdr(car(cdr L))))) L)) (Transitive? (remove* (list (car L) (list (car(car L)) (car(cdr(car(cdr L)))) ) (list (car(cdr(car L))) (car(cdr(car(cdr L)))))) L))]
           ;if none of these things work then it isn't transitive
             [(zero? 0)(not #t)])))))
