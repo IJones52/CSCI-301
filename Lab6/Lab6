@@ -1,0 +1,103 @@
+#lang racket
+
+
+;Helpers
+(define member?
+  (lambda (x L)
+    (if (null? L)
+        (not #t)
+        (begin
+          (if (list? x)
+              (not (set-equal? x L))
+              (begin
+          (if (eqv? x (car L))
+              (not #f)
+              (begin
+                (member? x (cdr L))))))))))
+
+
+(define subset?
+  (lambda (L1 L2)
+    (if (null? L1)
+         (not #f)
+         (begin
+    (if (not(member? (car L1) L2))
+        (not #t)
+        (begin
+          (subset? (cdr L1) L2)))))))
+
+
+(define set-equal?
+  (lambda (L1 L2)
+    (if (and (subset? L1 L2) (subset? L2 L1))
+        (not #f)
+        (begin
+          (not #t)))))
+
+
+
+
+;Reflexive xRx
+
+;Need to delete the pair in L, and have the end condition check if both L and S are null
+(define Reflexive?
+  (lambda (L S)
+    (if (and (null? L) (null? S))
+        (not #f)
+        (begin
+          (if (null? S)
+              (not #t)
+              (begin
+          (if (member? (list (car S) (car S)) L)
+              (Reflexive? (remove (list (car S) (car S)) L) (cdr S))
+              (begin
+                (not #t)))))))))
+
+;Symmetric xRy and yRx
+(define Symmetric?
+  (lambda (L)
+    (if (null? L)
+        (not #f)
+        (begin
+            (if (null? (cdr L))
+                    (member? (list (car(cdr(car L))) (car(car L))) L)
+                                (begin
+          (if (member (list (car(cdr(car L))) (car(car L))) L)
+              (Symmetric? (remove* (list (car L) (list (car(car(cdr L))) (car(car L)))) L))
+              (begin
+                (not #t)))))))))
+
+;Transitive xRy and yRz or xRx and xRx
+(define Transitive?
+  (lambda (L)
+    (if (null? L)
+        (not #f)
+        (begin
+          (cond
+          ;if the members of the pair are the same, remove it
+            [(eqv? (car(car L)) (car(cdr(car L)))) (Transitive? (remove (list (car(car L)) (car(car L))) L))]
+            ;still need a case that handles (a b) (b a) (a a) (b b) and anything like it
+            [(and (and (member (list (car(cdr(car L)))  (car(car L))) L) (member (list (car(cdr(car L))) (car(cdr(car L)))) L)) (member (list (car(car L)) (car(car L))) L)) (Transitive? (remove* (list (car L) (list (car(cdr(car L))) (car(cdr(car L))) ) (list (car(car L)) (car(car L)))  (list (car(cdr(car L)))  (car(car L)))) L))]
+            ;edit this is supposed to be false
+            [(member (list (car(cdr(car L))) (car(car L))) L) (not #t)]
+          ;if there is no reverse, try making a pair out of (. x) (. x) and search for that, and find (x .) (. x)
+            [(and (member (list (car(cdr(car L))) (car(cdr(car(cdr L))))) L) (member (list (car(car L)) (car(cdr(car(cdr L))))) L)) (Transitive? (remove* (list (car L) (list (car(car L)) (car(cdr(car(cdr L)))) ) (list (car(cdr(car L))) (car(cdr(car(cdr L)))))) L))]
+          ;if none of these things work then it isn't transitive
+         
+            [(zero? 0)(not #t)])))))
+
+
+(define Symmetric-Closure
+  (lambda (L)
+    ;if the array is symmetric we end
+           (if (Symmetric? L)
+               L
+               ;otherwise find the things we are missing to be symmetric and add them
+               (begin
+                 ;Look at the first element in the list, if the counterpart is in, append it to the end
+                 (cond
+                   [(member (list (car(cdr(car L))) (car(car L))) L) (Symmetric-Closure (append (remove (car L)L) (list(list (car(car L)) (car(cdr(car L)))))))]
+                   ;if it is not, append both of them to the end of the list
+                   [(zero? 0) (Symmetric-Closure (append (remove (car L) L) (list(list (car(car L)) (car(cdr(car L))) )) (list(list (car(cdr(car L))) (car(car L))) )))]
+                   )))))
+                 
