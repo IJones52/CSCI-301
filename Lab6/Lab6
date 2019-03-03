@@ -86,6 +86,23 @@
          
             [(zero? 0)(not #t)])))))
 
+(define Reflexive-Closure
+  (lambda (L S)
+    ;if the array is refelxive we end here
+    (if (Reflexive? L S)
+        L
+        ;find the parts we need to be reflexive
+        (begin
+          (cond
+          ;if the tuple of the first letter in S isnt in L, add it
+          [(not (member (list (car S) (car S)) L))(Reflexive-Closure (append L (list(list (car S) (car S)))) (append (remove (car S) S) (list(car S))))]
+          ;if we have an (a b) pair look for a (b c) pair, if not add it
+
+          ;move the stuff at the front of both lists to the end of the list
+          [(zero? 0) (Reflexive-Closure (append (remove (car L) L) (car L)) (append (remove (car S) S) (list(car S))))]
+          )))))
+ 
+
 
 (define Symmetric-Closure
   (lambda (L)
@@ -100,4 +117,18 @@
                    ;if it is not, append both of them to the end of the list
                    [(zero? 0) (Symmetric-Closure (append (remove (car L) L) (list(list (car(car L)) (car(cdr(car L))) )) (list(list (car(cdr(car L))) (car(car L))) )))]
                    )))))
+
+
+(define Transitive-Closure
+  (lambda (L)
+    ;We end when the array is transitive
+    (if (Transitive? L)
+        L
+        (begin
+          (cond
+            ;(a b) (b c), add (a c)
+            [(and (member (list (car(cdr(car L))) (car(cdr(car(cdr L))))) L) (member (list (car(car L)) (car(cdr(car(cdr L))))) L)) (Transitive-Closure (append L (list(list (car(car L)) (car(cdr(car(cdr L)))) ))))])))))
+            ;(a b) (b a), add (a a) (b b) 
+
+            ;Move the first element to the end of the list
                  
