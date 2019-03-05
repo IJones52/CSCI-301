@@ -35,15 +35,7 @@
           (not #t)))))
 
 
-(define union
-  (lambda (L1 L2)
-    (if (null? L1)
-        (car (list L2))
-        (begin
-          (if (member (car L1) L2)
-              (union (cdr L1) L2)
-              (begin
-                (union (cdr L1) (cons (car L1) L2))))))))
+
 
 ;Reflexive xRx
 
@@ -53,16 +45,13 @@
     (if (and (null? L) (null? S))
         (not #f)
         (begin
-          (if (null? L)
-              (not #t)
-              (begin
           (if (null? S)
               (not #t)
               (begin
-          (if (member (list (car S) (car S)) L)
+          (if (member? (list (car S) (car S)) L)
               (Reflexive? (remove (list (car S) (car S)) L) (cdr S))
               (begin
-                (not #t)))))))))))
+                (not #t)))))))))
 
 ;Symmetric xRy and yRx
 (define Symmetric?
@@ -106,11 +95,11 @@
         (begin
           (cond
           ;if the tuple of the first letter in S isnt in L, add it
-          [(not (member (list (car S) (car S)) L))(Reflexive-Closure (append L (list(list (car S) (car S)))) S )]
+          [(not (member (list (car S) (car S)) L))(Reflexive-Closure (append L (list(list (car S) (car S)))) (append (remove (car S) S) (list(car S))))]
           ;if we have an (a b) pair look for a (b c) pair, if not add it
 
           ;move the stuff at the front of both lists to the end of the list
-          [(zero? 0) (Reflexive-Closure (append (remove (car L) L) (list(car L))) (append (remove (car S) S) (list(car S))))]
+          [(zero? 0) (Reflexive-Closure (append (remove (car L) L) (car L)) (append (remove (car S) S) (list(car S))))]
           )))))
  
 
@@ -137,11 +126,9 @@
         L
         (begin
           (cond
-            ;(a b) (b c), add (a c) (Appenrently this isn't a case?)
-          ;  [(member (list (car(car L)) (car(cdr(car(cdr L))))) L) (Transitive-Closure (append L (list(list (car(car L)) (car(cdr(car(cdr L)))) ))))]
-        
-            ;(a b) (b a), add (a a) (b b) (Use union somehow), need to remove duplicates after the union is complete 
-            [(member (list (car(cdr(car L)))  (car(car L))) L) (Transitive-Closure (union L (list (list (car(car L)) (car (car L))) (list (car(cdr(car L))) (car(cdr(car L))))))) ]
+            ;(a b) (b c), add (a c)
+            [(and (member (list (car(cdr(car L))) (car(cdr(car(cdr L))))) L) (member (list (car(car L)) (car(cdr(car(cdr L))))) L)) (Transitive-Closure (append L (list(list (car(car L)) (car(cdr(car(cdr L)))) ))))])))))
+            ;(a b) (b a), add (a a) (b b) 
+
             ;Move the first element to the end of the list
-            [(zero? 0) (Transitive-Closure (append (remove (car L) L) (list (car L))))]
-              )))))     
+                 
