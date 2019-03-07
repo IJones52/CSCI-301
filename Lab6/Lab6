@@ -107,7 +107,8 @@
           (cond
           ;if the tuple of the first letter in S isnt in L, add it
           [(not (member (list (car S) (car S)) L))(Reflexive-Closure (append L (list(list (car S) (car S)))) S )]
-          ;if we have an (a b) pair look for a (b c) pair, if not add it
+          ;find ab bc andd cc and return
+          [(and (member (list (car S) (car (cdr S))) L) (member (list (car (cdr S)) (car(cdr(cdr S)))) L)) (append L (list(list (car(cdr(cdr S))) (car(cdr(cdr S))) )))]
 
           ;move the stuff at the front of both lists to the end of the list
           [(zero? 0) (Reflexive-Closure (append (remove (car L) L) (list(car L))) (append (remove (car S) S) (list(car S))))]
