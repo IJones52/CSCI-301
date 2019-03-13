@@ -92,6 +92,6 @@
   (define L2 (read in))
   (close-input-port in)
   (display (difference (union L1 L2) (intersect L1 L2)) out)
-  (displayln "Copied")
+  (displayln "Calculated... Sent to output file!")
   (close-output-port out))
   
